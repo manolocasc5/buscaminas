@@ -1,5 +1,7 @@
 from cell import Cell
 from board import Board
+import os
+import platform
 
 class Game:
     def __init__(self, width: int, height: int, num_mines: int):
@@ -33,6 +35,7 @@ class Game:
         # Inicia el juego
         print("Bienvenido al Buscaminas!")
         while not self.game_over:
+            self.clear_console()
             self.board.print_board()
             action = input("Ingresa 'f y 'x para colocar una bandera en la celda (x y), o'x y' para revelar la celda: ").split()
             try:
@@ -44,9 +47,14 @@ class Game:
                     self.make_move(x, y)
             except ValueError:
                 print("Entrada inválida. Ingresa dos números.")
-            # try:
-            #     x, y = map(int, input("Ingresa las coordenadas (x y): ").split())
-            #     self.make_move(x, y)
-            # except ValueError:
-            #     print("Entrada inválida. Ingresa dos números.")
 
+    def clear_console(self):
+        """Clears the console depending on the operating system."""
+        operating_system = platform.system()
+        if operating_system == "Windows":
+            os.system('cls')
+        elif operating_system == "Linux" or operating_system == "Darwin":
+            os.system('clear')
+        else:
+            print(f"Console clearing is not supported on the operating system: {operating_system}")
+    
